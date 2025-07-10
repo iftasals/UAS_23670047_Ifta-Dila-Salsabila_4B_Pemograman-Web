@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cek Pesanan</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Ubuntu Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Ubuntu', sans-serif;
+      background: url("/static/img/bg.png") no-repeat center center fixed;
+      background-size: cover;
+      display: block;
+    }
+
+    .container-pesanan {
+      background-color: #e6f4ea;
+      width: 100%;
+      max-width: 850px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-group input {
+      background-color: #e6f4ea;
+      border: 2px solid #65a87c;
+      color: #333;
+    }
+
+    .input-group .btn {
+      border: 2px solid #65a87c;
+      background-color: #e6f4ea;
+      color: #2f6540;
+    }
+
+    .input-group .btn:hover {
+      background-color: #cdebd8;
+      color: #1e4c33;
+    }
+
+    .status {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 5px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .warning {
+      background: none;
+      color: red;
+      padding: 0;
+      font-weight: normal;
+    }
+
+    .custom-table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .custom-table thead {
+      background-color: #ebbf2fc4;
+      color: rgb(0, 0, 0);
+    }
+
+    .custom-table th,
+    .custom-table td {
+      padding: 12px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .custom-table td {
+      background-color: #ffffff;
+    }
+
+    .custom-table thead th:first-child {
+      border-top-left-radius: 12px;
+    }
+
+    .custom-table thead th:last-child {
+      border-top-right-radius: 12px;
+    }
+
+    .custom-table tbody tr:last-child td:first-child {
+      border-bottom-left-radius: 12px;
+    }
+
+    .custom-table tbody tr:last-child td:last-child {
+      border-bottom-right-radius: 12px;
+    }
+
+    .status-label {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      min-width: 90px;
+    }
+
+    .status-terkirim {
+      background-color: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid #14532d;
+      background-color: transparent;
+      color: #14532d;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 16px;
+      text-decoration: none;
+      font-family: 'Ubuntu', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-back i {
+      font-size: 18px;
+      border: 2px solid #14532d;
+      border-radius: 50%;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-back:hover {
+      background-color: #e6f4ea;
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .custom-table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      .custom-table thead {
+        display: none;
+      }
+
+      .custom-table td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+        border-radius: 0 !important;
+      }
+
+      .custom-table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        font-weight: bold;
+        color: #333;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="page-wrapper" style="min-height: calc(100vh - 120px); display: flex; align-items: center; justify-content: center; flex-direction: column;">
+    <div class="container-pesanan">
+      <h2>Cek Status Pesanan</h2>
+      <form method="GET" action="/cek-pesanan">
+        <label for="nama" class="form-label">Masukkan Nama Anak:</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="nama" name="nama" value="{{.Nama}}" placeholder="Search" required>
+          <button class="btn" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </form>
+
+      {{if .PesananList}}
+      <div class="table-responsive">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Kelas</th>
+              <th>Ukuran</th>
+              <th>Jenis</th>
+              <th>Jumlah</th>
+              <th>Jenis Kelamin</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{range .PesananList}}
+            <tr>
+              <td data-label="Nama">{{.Nama}}</td>
+              <td data-label="Kelas">{{.Kelas}}</td>
+              <td data-label="Ukuran">{{.Ukuran}}</td>
+              <td data-label="Jenis">{{.Jenis}}</td>
+              <td data-label="Jumlah">{{.Jumlah}}</td>
+              <td data-label="Jenis Kelamin">{{if eq .JenisKelamin "L"}}Laki-Laki{{else}}Perempuan{{end}}</td>
+              <td data-label="Status">
+                <span class="status-label status-terkirim">Terkirim</span>
+              </td>
+            </tr>
+            {{end}}
+          </tbody>
+        </table>
+      </div>
+      {{else if .Nama}}
+      <div class="status warning">
+        Belum ada pesanan
+      </div>
+      {{end}}
+
+      <div class="back-link">
+        <a href="/" class="btn-back">
+          <i class="bi bi-arrow-left"></i>
+          Kembali 
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer style="background-color: #438947; color: white; width: 100%; padding: 20px 0 10px;">
+    <div style="text-align: center; max-width: 1000px; margin: 0 auto; padding: 0 20px;">
+      <h5 style="margin-bottom: 10px; font-weight: bold;">TK Mekar Asih</h5>
+      <p style="margin-bottom: 15px; font-size: 14px;">
+        Formulir ini digunakan untuk melakukan pemesanan seragam TK MEKAR ASIH.
+        Pastikan data diisi dengan benar sebelum dikirim. Jika ada pertanyaan,
+        silakan hubungi panitia melalui kontak yang tersedia.
+      </p>
+      <div style="font-size: 20px; margin-bottom: 10px;">
+        <a href="https://wa.me/6282137619530" target="_blank" style="color: white; margin-right: 16px; text-decoration: none;">
+          <i class="bi bi-whatsapp"></i>
+        </a>
+        <a href="https://maps.app.goo.gl/JAcXVzqpbvf6oWma9" target="_blank" style="color: white; text-decoration: none;">
+          <i class="bi bi-geo-alt-fill"></i>
+        </a>
+      </div>
+      <small>&copy; 2025 TK Mekar Asih</small>
+    </div>
+  </footer>
+</body>
+</html>

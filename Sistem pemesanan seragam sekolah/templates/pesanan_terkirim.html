@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pesanan Terkirim</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <style>
+    body.bg-seragam {
+      font-family: 'Ubuntu', sans-serif;
+      background: url("/static/img/bg.png") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .message-box {
+      background-color: #e6f4ea;
+      padding: 40px 30px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .message-box h1 {
+      color: #1d677d;
+      font-size: 22px;
+      margin-bottom: 25px;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid #14532d;
+      background-color: transparent;
+      color: #14532d;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 16px;
+      text-decoration: none;
+      font-family: 'Ubuntu', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-back i {
+      font-size: 18px;
+      border: 2px solid #14532d;
+      border-radius: 50%;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-back:hover {
+      background-color: #d1e7dd;
+      color: #0f5132;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body class="bg-seragam">
+  <div class="message-box">
+    <h1>Pesanan berhasil terkirim!</h1>
+    <a href="/" class="btn-back">
+      <i class="bi bi-arrow-left"></i>
+      Kembali
+    </a>
+  </div>
+</body>
+</html>
